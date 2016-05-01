@@ -17,6 +17,18 @@ Once the ambient light is dark enough, the LED strip will turn on for 6 hours (t
 |Power monitor| Keep tabs on your power consumption (so we can send our feline friends the bill)
 |`Coming soon` Real-time clock| For keeping it real (in a time kind of way)
 
+# Get the files
+
+- Clone the repo: `git clone https://github.com/Leenix/Cat-Palace-Lighting.git`
+
+### Folders
+
+|Folder|Description|
+|---|---|
+|doc| Documentation - all the information you'll need to install the project
+|lib|Custom Arduino libraries
+|src|Arduino sketch and config file
+
 # Docs
 
 - [Parts list](/doc/parts.md) - Get all the things you need to put the controller together

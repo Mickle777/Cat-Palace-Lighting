@@ -6,7 +6,7 @@ The Arduino sketch in this project uses [PlatformIO](http://platformio.org/), wh
 
 ## Using PlatformIO to build the code
 
-[![PlatformIO](images/platformio-logo.17fdc3bc.png)](http://platformio.org/)
+[![PlatformIO](http://cdn.platformio.org/images/platformio-logo.17fdc3bc.png)](http://platformio.org/)
 
 Most of the hard work is done already.
 
@@ -22,7 +22,7 @@ Most of the hard work is done already.
 
 ## Using Arduino IDE to build the code
 
-[![Arduino](images/Arduino.png)](https://www.arduino.cc/en/Main/Software)
+[![Arduino](https://www.arduino.cc/en/pub/skins/arduinoWide/img/ArduinoLogo_loop-01.svg)](https://www.arduino.cc/en/Main/Software)
 
 The Arduino IDE is fine for building and uploading the code, but you'll need to grab the libraries yourself, which you can do using their inbuilt library manager.
 
