@@ -9,8 +9,8 @@ Once the ambient light is dark enough, the LED strip will turn on for 6 hours (t
 
 # Features
 
-||
-|-|-|
+|Feature|Description|
+|----|----|
 |Ambient light sensor| To check how much sun/not sun these cats are getting in their outdoor resort|
 |RGB light controller| A lighting controller needs a light (in exciting 24-bit colour)|
 |LCD Screen| So you can see what the controller is doing with your human eyes
