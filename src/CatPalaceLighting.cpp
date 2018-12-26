@@ -27,7 +27,7 @@ RTC_DS3231 rtc;
 const int ON_HOUR = 5;
 const int ON_MINUTE = 30;
 const int OFF_HOUR = 23;
-const int OFF_MINUTE = 45;
+const int OFF_MINUTE = 30;
 bool lights_enabled;
 long time_of_last_check;
 const long TIME_BETWEEN_CHECKS = 10000;
