@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\Michael\\.platformio\\penv\\Scripts;C:\\Users\\Michael\\.platformio\\penv;C:\\Program Files (x86)\\Mozilla Firefox;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;E:\\PIC\\MPLAB C32 Suite\\bin;C:\\Program Files\\LLVM\\bin;C:\\Program Files (x86)\\Mozilla Firefox;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;E:\\PIC\\MPLAB C32 Suite\\bin;C:\\Program Files\\LLVM\\bin",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
