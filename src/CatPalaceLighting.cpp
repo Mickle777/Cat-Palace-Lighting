@@ -15,7 +15,7 @@
 // Function prototypes so the compiler shuts up...
 void check_time();
 void check_light();
-void update_lcd();
+//void update_lcd();
 float get_current();
 
 // Logging/Comms
@@ -25,12 +25,12 @@ const int LOGGER_LEVEL = LOG_LEVEL_VERBOSE;
 // RTC
 RTC_DS3231 rtc;
 const int ON_HOUR = 5;
-const int ON_MINUTE = 30;
+const int ON_MINUTE = 00;//! CHANGE BACK TO 10000 AFTER TESTING
 const int OFF_HOUR = 23;
 const int OFF_MINUTE = 30;
 bool lights_enabled;
 long time_of_last_check;
-const long TIME_BETWEEN_CHECKS = 10000;
+const long TIME_BETWEEN_CHECKS = 100; //!CHANGE BACK TO 10000 AFTER TESTING
 Ticker rtc_check_timer(check_time, TIME_BETWEEN_CHECKS, MILLIS);
 
 // LDR
@@ -39,6 +39,8 @@ const int LDR_LOWER_THRESHOLD = 30;
 const int LDR_UPPER_THRESHOLD = 80;
 Ticker light_check_timer(check_light, TIME_BETWEEN_CHECKS, MILLIS);
 
+
+/**
 // Display
 const int LCD_ENABLE_PIN = A2;
 const int LCD_RS_PIN = A3;
@@ -53,8 +55,10 @@ Ticker update_lcd_timer(update_lcd, TIME_BETWEEN_CHECKS, MILLIS);
 const int LCD_WIDTH = 16;
 const int LCD_HEIGHT = 2;
 
+*/
+
 // Switches
-const int LAMP_PIN = 10;
+const int LAMP_PIN = 13; //! CHANGE BACK TO 10 AFTTER TESTING
 LampControl light(LAMP_PIN);
 const int PUMP_PIN = 12;
 
@@ -79,8 +83,8 @@ void setup(){
     pinMode(LDR_PIN, INPUT);
     light_check_timer.start();
 
-    lcd.begin(LCD_WIDTH, LCD_HEIGHT);
-    update_lcd_timer.start();
+   // lcd.begin(LCD_WIDTH, LCD_HEIGHT);
+   // update_lcd_timer.start();
 
     lights_enabled = true;
 }
@@ -89,7 +93,7 @@ void setup(){
 void loop(){
   rtc_check_timer.update();
   light_check_timer.update();
-  update_lcd_timer.update();
+ // update_lcd_timer.update();
   light.tick();
 }
 
@@ -128,17 +132,19 @@ void check_light(){
         // Check levels and switch lamp accordingly
         if (light.is_active){
             if (ldr_level > LDR_UPPER_THRESHOLD){
-                light.deactivate_lamp();
+                light.deactivate_lamp();                
             }
         }else{
             if (ldr_level < LDR_LOWER_THRESHOLD){
                 light.timeout_enabled = false;
                 light.activate_lamp();
+                Log.notice(F("Lights on\n"));
             }
         }
     }
 }
 
+/**
 void update_lcd(){
   // TIME-HHMM C.C A
   // ON-HHMM OFF-HHMM
@@ -190,10 +196,15 @@ void update_lcd(){
   }
   lcd.write(OFF_MINUTE);
 
-}
+} 
+
+
 
 float get_current(){
   int read = analogRead(CURRENT_PIN);
   float current = read/float(1024) * CURRENT_SCALAR;
   return current;
+  Log.verbose(F("Current: %d\n"), current);
 }
+
+*/
