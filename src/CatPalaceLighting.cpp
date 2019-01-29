@@ -23,21 +23,22 @@ const long SERIAL_BAUD = 57600;
 const int LOGGER_LEVEL = LOG_LEVEL_VERBOSE;
 
 // RTC
+//* Wiring; VCC to LIGHT + (3V3), GND to LIGHT -, SDA to LIGHT ~ (A4), SCL to LIGHT C (A5)
 RTC_DS3231 rtc;
 const int ON_HOUR = 5;
-const int ON_MINUTE = 00;//! CHANGE BACK TO 10000 AFTER TESTING
+const int ON_MINUTE = 00;//! CHANGE BACK TO 30 AFTER TESTING
 const int OFF_HOUR = 23;
 const int OFF_MINUTE = 30;
 bool lights_enabled;
 long time_of_last_check;
-const long TIME_BETWEEN_CHECKS = 100; //!CHANGE BACK TO 10000 AFTER TESTING
-Ticker rtc_check_timer(check_time, TIME_BETWEEN_CHECKS, MILLIS);
+const long TIME_BETWEEN_CHECKS = 1000; //!CHANGE BACK TO 10000 AFTER TESTING
+Ticker rtc_check_timer(check_time, TIME_BETWEEN_CHECKS, 0, MILLIS);
 
 // LDR
-const int LDR_PIN = A0;
+const int LDR_PIN = A0; //* Fork 1
 const int LDR_LOWER_THRESHOLD = 30;
 const int LDR_UPPER_THRESHOLD = 80;
-Ticker light_check_timer(check_light, TIME_BETWEEN_CHECKS, MILLIS);
+Ticker light_check_timer(check_light, TIME_BETWEEN_CHECKS, 0, MILLIS);
 
 
 /**
@@ -50,7 +51,7 @@ const int LCD_D6 = 4;
 const int LCD_D7 = A6; // Can go on D5
 const int LCD_BACKLIGHT = 11;
 LiquidCrystal lcd(LCD_RS_PIN, LCD_ENABLE_PIN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
-Ticker update_lcd_timer(update_lcd, TIME_BETWEEN_CHECKS, MILLIS);
+Ticker update_lcd_timer(update_lcd, TIME_BETWEEN_CHECKS, 0, MILLIS);
 
 const int LCD_WIDTH = 16;
 const int LCD_HEIGHT = 2;
@@ -58,12 +59,12 @@ const int LCD_HEIGHT = 2;
 */
 
 // Switches
-const int LAMP_PIN = 13; //! CHANGE BACK TO 10 AFTTER TESTING
+const int LAMP_PIN = 13; //! Keep this change from 10 to 13 which goes to Q2 gate so can see board led on when lamp om
 LampControl light(LAMP_PIN);
-const int PUMP_PIN = 12;
+const int PUMP_PIN = 12; //* Q1 gate
 
 // Current meter
-const int CURRENT_PIN = A1;
+const int CURRENT_PIN = A1; //* Fork 2
 const float CURRENT_SCALAR = 0.2;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -94,7 +95,7 @@ void loop(){
   rtc_check_timer.update();
   light_check_timer.update();
  // update_lcd_timer.update();
-  light.tick();
+  light.tick(); //! what does this do??
 }
 
 
@@ -109,7 +110,7 @@ void check_time(){
     DateTime now = rtc.now();
     Log.verbose(F("Time check:\t%d:%d:%d\n"), now.hour(), now.minute(), now.second());
 
-    if (!lights_enabled){
+    if (lights_enabled){ //! removed !
         if (now.hour() >= ON_HOUR && now.minute() >= ON_MINUTE) {
             lights_enabled = true;
             Log.notice(F("Lights enabled\n"));
@@ -130,13 +131,15 @@ void check_light(){
         Log.verbose(F("LDR level: %d\n"), ldr_level);
 
         // Check levels and switch lamp accordingly
-        if (light.is_active){
+       //! whats this shit?? if (light.is_active){
             if (ldr_level > LDR_UPPER_THRESHOLD){
-                light.deactivate_lamp();                
+                light.deactivate_lamp(); 
+                Log.notice(F("Lights off\n"));               
             }
-        }else{
+        //!}
+        else{
             if (ldr_level < LDR_LOWER_THRESHOLD){
-                light.timeout_enabled = false;
+               //! whats this?? light.timeout_enabled = false;
                 light.activate_lamp();
                 Log.notice(F("Lights on\n"));
             }
