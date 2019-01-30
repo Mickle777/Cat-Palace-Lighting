@@ -26,16 +26,16 @@ const int LOGGER_LEVEL = LOG_LEVEL_VERBOSE;
 //* Wiring; VCC to LIGHT + (3V3), GND to LIGHT -, SDA to LIGHT ~ (A4), SCL to LIGHT C (A5)
 RTC_DS3231 rtc;
 const int ON_HOUR = 5;
-const int ON_MINUTE = 00;//! CHANGE BACK TO 30 AFTER TESTING
+const int ON_MINUTE = 30;
 const int OFF_HOUR = 23;
 const int OFF_MINUTE = 30;
 bool lights_enabled;
 long time_of_last_check;
-const long TIME_BETWEEN_CHECKS = 1000; //!CHANGE BACK TO 10000 AFTER TESTING
+const long TIME_BETWEEN_CHECKS = 1000; //! ms CHANGE BACK TO 10000 AFTER TESTING
 Ticker rtc_check_timer(check_time, TIME_BETWEEN_CHECKS, 0, MILLIS);
 
 // LDR
-const int LDR_PIN = A0; //* Fork 1
+const int LDR_PIN = A0; //* Fork 1 ~
 const int LDR_LOWER_THRESHOLD = 30;
 const int LDR_UPPER_THRESHOLD = 80;
 Ticker light_check_timer(check_light, TIME_BETWEEN_CHECKS, 0, MILLIS);
@@ -59,12 +59,12 @@ const int LCD_HEIGHT = 2;
 */
 
 // Switches
-const int LAMP_PIN = 13; //! Keep this change from 10 to 13 which goes to Q2 gate so can see board led on when lamp om
+const int LAMP_PIN = 13; //! Keep this change from 10 to 13 so can see board led on when lamp on. Lamp switch is Q2
 LampControl light(LAMP_PIN);
 const int PUMP_PIN = 12; //* Q1 gate
 
 // Current meter
-const int CURRENT_PIN = A1; //* Fork 2
+const int CURRENT_PIN = A1; //* Fork 2 ~
 const float CURRENT_SCALAR = 0.2;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ const float CURRENT_SCALAR = 0.2;
 void setup(){
     Serial.begin(SERIAL_BAUD);
     Log.begin(LOGGER_LEVEL, &Serial);
-    Log.notice(F("Working...\n"));
+    Log.notice(F("Working...\n")); //! What does \n do?
 
     rtc.begin();
     DateTime now = rtc.now();
@@ -83,6 +83,8 @@ void setup(){
 
     pinMode(LDR_PIN, INPUT);
     light_check_timer.start();
+
+    //! Can we add some lines that we can have // out then run when need to reset rtc to PC time
 
    // lcd.begin(LCD_WIDTH, LCD_HEIGHT);
    // update_lcd_timer.start();
@@ -110,7 +112,7 @@ void check_time(){
     DateTime now = rtc.now();
     Log.verbose(F("Time check:\t%d:%d:%d\n"), now.hour(), now.minute(), now.second());
 
-    if (lights_enabled){ //! removed !
+    if (lights_enabled){ //! removed ! ??
         if (now.hour() >= ON_HOUR && now.minute() >= ON_MINUTE) {
             lights_enabled = true;
             Log.notice(F("Lights enabled\n"));
@@ -128,7 +130,7 @@ void check_light(){
     if (lights_enabled){
 
         int ldr_level = analogRead(LDR_PIN);
-        Log.verbose(F("LDR level: %d\n"), ldr_level);
+        Log.verbose(F("LDR level: %d\n"), ldr_level); //! why %d\n??
 
         // Check levels and switch lamp accordingly
        //! whats this shit?? if (light.is_active){
